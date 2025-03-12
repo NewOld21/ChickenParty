@@ -5,6 +5,17 @@ from bson.objectid import ObjectId
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 import bcrypt
 import random
+<<<<<<< HEAD
+=======
+import re
+
+# 토큰에서 닉네임을 추출하려면
+#from flask_jwt_extended import get_jwt
+
+# 토큰에서 전체 클레임 가져오기
+#claims = get_jwt()
+#nickname = claims.get('nickname')
+>>>>>>> 660fd0d (second commit)
 
 
 app = Flask(__name__)
@@ -27,6 +38,10 @@ jungle_quiz = [
 ]
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 660fd0d (second commit)
 # 공통 함수로 현재 사용자 정보 가져오기
 def get_current_user():
     try:
@@ -47,6 +62,15 @@ def unauthorized_callback(callback):
     # 로그인 페이지로 리다이렉트
     return redirect(url_for('login', next=request.path))
 
+<<<<<<< HEAD
+=======
+# 토큰 만료 사용자 처리
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_payload):
+    return redirect(url_for('home'))
+
+
+>>>>>>> 660fd0d (second commit)
 
 # MongoDB 연결
 client = MongoClient('localhost', 27017)
@@ -186,12 +210,25 @@ def complete():
     return render_template('complete.html', invite=result, user=current_user)
 
 
+<<<<<<< HEAD
 #업데이트
 @app.route('/update', methods=['POST'])
 def update():
     id_receive = ObjectId(request.form['id_give'])
     result = list(db.cp_invites.find({'_id': id_receive}, {}))
     return render_template('update.html', invite=result[0])
+=======
+@app.route('/update', methods=['GET'])
+def update():
+    return render_template('update.html')
+
+@app.route('/update', methods=['POST'])
+def update_invite():
+    title_receive = request.form['title']
+    new_title = request.form.get('new_title', title_receive)
+    db.cp_invites.update_one({'title': title_receive}, {'$set': {'title': new_title}})
+    return redirect(url_for('read_invite', category=0))
+>>>>>>> 660fd0d (second commit)
 
 
 
@@ -207,18 +244,33 @@ def login():
         
         # 사용자가 존재하고 비밀번호가 일치하는지 확인
         if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+<<<<<<< HEAD
             # JWT 액세스 토큰 생성
             access_token = create_access_token(identity=username)
             
             # next 파라미터가 있으면 해당 페이지로 리다이렉트
+=======
+            # JWT 액세스 토큰 생성, 닉네임 추가
+            access_token = create_access_token(identity=username, additional_claims={'nickname': user['nickname']})
+
+        # 이 부분 추가: 응답 생성 및 토큰 설정
+>>>>>>> 660fd0d (second commit)
             next_page = request.args.get('next')
             if next_page:
                 resp = redirect(next_page)
             else:
+<<<<<<< HEAD
                 resp = redirect(url_for('read_invite', category=0))
                 
             resp.set_cookie('access_token_cookie', access_token, httponly=True, path='/')
             return resp
+=======
+                resp = redirect(url_for('home'))
+            
+            resp.set_cookie('access_token_cookie', access_token, httponly=True, path='/')
+            return resp
+            
+>>>>>>> 660fd0d (second commit)
         else:
             current_user = get_current_user()
             return render_template('login.html', error_message='아이디 또는 비밀번호가 일치하지 않습니다!', user=current_user)
@@ -232,6 +284,12 @@ def login():
 @app.route('/signup', methods=['GET','POST'])
 def signup():
     if request.method == 'POST':
+<<<<<<< HEAD
+=======
+        random_quiz = random.choice(jungle_quiz)
+        random_index = jungle_quiz.index(random_quiz)
+
+>>>>>>> 660fd0d (second commit)
         # 폼 데이터 받기
         username = request.form.get('username')
         password = request.form.get('password')
@@ -239,10 +297,30 @@ def signup():
         quiz_answer = request.form.get('quiz_answer')
         quiz_index = int(request.form.get('quiz_index', 0))
         
+<<<<<<< HEAD
         # 유효성 검사
         if not username or not password or not nickname:
             current_user = get_current_user()
             return render_template('signup.html', error_message='모든 필드를 입력해주세요!', user=current_user)
+=======
+        # 필드 입력 여부 검사
+        if not username or not password or not nickname:
+            current_user = get_current_user()
+            return render_template('signup.html', error_message='모든 필드를 입력해주세요!', quiz=random_quiz, quiz_index=random_index, user=current_user)
+        
+        
+        # 비밀번호: 최소 6자 이상
+        if len(password) < 6:
+            current_user = get_current_user()
+            return render_template('signup.html', error_message='비밀번호는 최소 6자 이상이어야 합니다!', quiz=random_quiz, quiz_index=random_index, user=current_user)
+        
+        # 중복 닉네임 검사
+        existing_nickname = db.cp_users.find_one({'nickname': nickname})
+        if existing_nickname:
+            current_user = get_current_user()
+            return render_template('signup.html', error_message='이미 사용 중인 닉네임입니다!', quiz=random_quiz, quiz_index=random_index, user=current_user)
+
+>>>>>>> 660fd0d (second commit)
         
         # 퀴즈 답변 확인 - 문자열로 변환하여 비교
         correct_answer = str(jungle_quiz[quiz_index]["answer"]).strip()
@@ -293,6 +371,13 @@ def check_username():
     if not username:
         return jsonify({'success': False, 'message': '아이디를 입력해주세요.'})
     
+<<<<<<< HEAD
+=======
+    # 아이디 형식 검사
+    if not re.match("^[A-Za-z0-9]+$", username):
+        return jsonify({'success': False, 'message': '아이디는 영어와 숫자만 사용 가능합니다.'})
+    
+>>>>>>> 660fd0d (second commit)
     # 사용자 중복 확인
     existing_user = db.cp_users.find_one({'username': username})
     
@@ -300,6 +385,44 @@ def check_username():
         return jsonify({'success': False, 'message': '이미 사용 중인 아이디입니다.'})
     else:
         return jsonify({'success': True, 'message': '사용 가능한 아이디입니다.'})
+<<<<<<< HEAD
+=======
+    
+# 닉네임 중복 확인 API
+@app.route('/api/check-nickname', methods=['POST'])
+def check_nickname():
+    nickname = request.form.get('nickname')
+    
+    if not nickname:
+        return jsonify({'success': False, 'message': '닉네임을 입력해주세요.'})
+    
+    # 닉네임 중복 확인
+    existing_nickname = db.cp_users.find_one({'nickname': nickname})
+    
+    if existing_nickname:
+        return jsonify({'success': False, 'message': '이미 사용 중인 닉네임입니다.'})
+    else:
+        return jsonify({'success': True, 'message': '사용 가능한 닉네임입니다.'})
+    
+# 퀴즈 정답 확인 API
+@app.route('/api/check-quiz-answer', methods=['POST'])
+def check_quiz_answer():
+    quiz_index = int(request.form.get('quiz_index', 0))
+    quiz_answer = request.form.get('quiz_answer', '')
+    
+    if not quiz_answer:
+        return jsonify({'success': False, 'message': '퀴즈 답변을 입력해주세요.'})
+    
+    # 퀴즈 답변 확인
+    correct_answer = str(jungle_quiz[quiz_index]["answer"]).strip()
+    user_answer = quiz_answer.strip()
+    
+    if user_answer != correct_answer:
+        return jsonify({'success': False, 'message': '정글 퀴즈 정답이 틀렸습니다!'})
+    else:
+        return jsonify({'success': True, 'message': '정답입니다!'})
+
+>>>>>>> 660fd0d (second commit)
 
 # 로그아웃 라우트
 @app.route('/logout', methods=['GET'])

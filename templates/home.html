@@ -39,10 +39,13 @@
         .card-btn {
             text-align: center;
         }
+<<<<<<< HEAD
         .card{
             height: 1000px;
         }
 
+=======
+>>>>>>> 660fd0d (second commit)
     </style>
 </head>
 
@@ -51,6 +54,10 @@
         <p class="top-button">
             <a href="{{ url_for('apply') }}"><button type="button" class="btn btn-dark">파티 모집</button></a>
             <a href="{{ url_for('home') }}"><button type="button" class="btn btn-primary">홈</button></a>
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 660fd0d (second commit)
             {% if user %}
                 <!-- 로그인된 경우 -->
                 <span class="mr-2">{{ user.nickname }}님 환영합니다</span>
@@ -64,10 +71,13 @@
             <div class="container">
                 <h1 class="text-center">치킨 파티</h1>
                 <p class="text-center">배달 파티원 모집</p>
+<<<<<<< HEAD
                 <form action="{{url_for('select')}}" method="POST" style="display:inline;">
                     <input type="text" class="form-control" name="title_give" id="exampleFormControlInput1" placeholder="찾고 싶은 제목을 입력하세요" maxlength="50">
                     <button type="submit" class="btn btn-light">검색</button>
                 </form>
+=======
+>>>>>>> 660fd0d (second commit)
             </div>
         </div>
         <div class="category">
@@ -86,6 +96,7 @@
             {% for invite in invites %}
             <div class="col">
                 <div class="card">
+<<<<<<< HEAD
                     {%if invite.category == '치킨'%}
                     <img class="card-img-top" src="/static/chicken.png" alt="Card image cap">
                     {%elif invite.category == '한식'%}
@@ -107,20 +118,33 @@
                     <div class="card-body">
                         <h3 class="card-title">{{ invite.title }}</h3>
                         <p class="card-text">#{{ invite.category }}</p>
+=======
+                    <img class="card-img-top" src="data:image/jpeg;base64,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" alt="Card image cap">
+                    <div class="card-body">
+                    
+                        <h3 class="card-title">{{ invite.title }}</h3>
+>>>>>>> 660fd0d (second commit)
                         <p class="card-text">인원 : {{ invite.now_person }}/{{ invite.limit_person }}</p>
                         <p class="card-text">유형 : {{ invite.type }}</p>
                         <p class="card-text">비고 : {{ invite.note }}</p>
                         <p class="card-text">작성시간: {{ invite.created_at }}</p>
                         <div class="card-btn">
+<<<<<<< HEAD
                             <form action="{{url_for('delete')}}" method="post" style="display:inline;">
                                 <input type="hidden" name="id_give" value="{{ invite._id }}">
                                 <button type="sumit" class="btn btn-primary">삭제</button>
+=======
+                            <form action="/home/delete" method="post" style="display:inline;">
+                                <input type="hidden" name="title_give" value="{{ invite.title }}">
+                                <button type="button" class="btn btn-primary">삭제</button>
+>>>>>>> 660fd0d (second commit)
                             </form>
                             {%if invite.now_person != invite.limit_person%}
                             <form action="{{ url_for('complete') }}" method="POST" style="display:inline;">
                                 <input type="hidden" name="id_give" value="{{ invite._id }}">
                                 <button type="submit" class="btn btn-primary">참여</button>
                             </form>
+<<<<<<< HEAD
                             {%else%}
                             <form action="{{ url_for('complete') }}" method="POST" style="display:inline;">
                                 <input type="hidden" name="id_give" value="{{ invite._id }}">
@@ -130,6 +154,12 @@
                             <form action="{{ url_for('update') }}" method="POST" style="display:inline;">
                                 <input type="hidden" name="id_give" value="{{ invite._id }}">
                                 <button type="submit" class="btn btn-primary">수정</button></a>
+=======
+                            {%endif%}
+                            <form action="{{ url_for('update') }}" method="post" style="display:inline;">
+                                <input type="hidden" name="id_give" value="{{ invite._id }}">
+                                <button type="button" class="btn btn-primary">수정</button></a>
+>>>>>>> 660fd0d (second commit)
                             </form>
                         </div>
                     </div>
@@ -138,6 +168,7 @@
             {% endfor %}
         </div>
     </div>
+<<<<<<< HEAD
     <script>
         window.onpageshow = function(event) {
             if (event.persisted || window.performance && window.performance.navigation.type === 2) {
@@ -145,6 +176,8 @@
             }
         };
     </script>
+=======
+>>>>>>> 660fd0d (second commit)
 </body>
 
 </html>

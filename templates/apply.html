@@ -50,6 +50,10 @@
             <p class="top-button">
                 <a href="{{ url_for('apply') }}"><button type="button" class="btn btn-dark">파티 모집</button></a>
                 <a href="{{ url_for('home') }}"><button type="button" class="btn btn-primary">홈</button></a>
+<<<<<<< HEAD
+=======
+                
+>>>>>>> 660fd0d (second commit)
                 {% if user %}
                     <!-- 로그인된 경우 -->
                     <span class="mr-2">{{ user.nickname }}님 환영합니다</span>
@@ -69,7 +73,11 @@
             <form method="POST" action="{{ url_for('apply') }}">
                 <div class="form-group">
                     <label for="exampleFormControlInput1">제목</label>
+<<<<<<< HEAD
                     <input type="text" class="form-control" name="title_give" id="exampleFormControlInput1" placeholder="최대 50자" maxlength="50">
+=======
+                    <input type="text" class="form-control" name="title_give" id="exampleFormControlInput1" placeholder="">
+>>>>>>> 660fd0d (second commit)
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">카테고리</label>
@@ -100,7 +108,11 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">오픈 채팅 URL</label>
+<<<<<<< HEAD
                     <input type="text" class="form-control" name="chat_give" id="exampleFormControlInput1" placeholder="https://open.chicken.com/">
+=======
+                    <input type="text" class="form-control" name="chat_give" id="exampleFormControlInput1" placeholder="">
+>>>>>>> 660fd0d (second commit)
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">유형</label>
@@ -112,8 +124,13 @@
                     </select>
                 </div>
                 <div class="form-group">
+<<<<<<< HEAD
                     <label for="exampleFormControlTextarea1">비고</label>
                     <textarea class="form-control" name="note_give" maxlength="100" id="exampleFormControlTextarea1" placeholder="최대 100자" rows="2"></textarea>
+=======
+                    <label for="exampleFormControlTextarea1">비고(최대150자)</label>
+                    <textarea class="form-control" name="note_give" maxlength="150" id="exampleFormControlTextarea1" rows="3"></textarea>
+>>>>>>> 660fd0d (second commit)
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">비밀번호</label>

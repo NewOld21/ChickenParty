@@ -27,7 +27,11 @@
         .wrap {
             place-items: center;
             font-family: 'NanumDaSiSiJagHae';
+<<<<<<< HEAD
             font-size:x-large;
+=======
+            font-size: x-large;
+>>>>>>> 660fd0d (second commit)
             font-weight: bold;
         }
 
@@ -38,16 +42,26 @@
         .btn {
             text-align: center;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 660fd0d (second commit)
         .top-button {
             display: flex;
             justify-content: space-between;
         }
+<<<<<<< HEAD
 
     </style>
     <script>
     </script>
 
 </head>
+=======
+    </style>
+</head>
+
+>>>>>>> 660fd0d (second commit)
 <body>
     <div class="wrap">
         <p class="top-button">
@@ -60,7 +74,11 @@
         <div class="alert alert-danger" role="alert">
             {{ error_message }}
         </div>
+<<<<<<< HEAD
         {%endif%}
+=======
+        {% endif %}
+>>>>>>> 660fd0d (second commit)
         <form method="POST" action="{{ url_for('signup') }}">
             <div class="form-group">
                 <label for="username">아이디</label>
@@ -75,6 +93,7 @@
             <div class="form-group">
                 <label for="password">비밀번호</label>
                 <input type="password" class="form-control" id="password" name="password" required>
+<<<<<<< HEAD
             </div>
             <div class="form-group">
                 <label for="password_confirm">비밀번호 확인</label>
@@ -83,12 +102,41 @@
             <div class="form-group">
                 <label for="nickname">닉네임</label>
                 <input type="text" class="form-control" id="nickname" name="nickname" required>
+=======
+                <small id="passwordHelp" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호 확인</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <small id="passwordHelp" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="nickname">닉네임</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="nickname" name="nickname" required>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-dark" id="checkNickname">중복확인</button>
+                    </div>
+                </div>
+                <small id="nicknameHelp" class="form-text"></small>
+>>>>>>> 660fd0d (second commit)
             </div>
             <div class="form-group">
                 <p>정글 퀴즈</p>
                 <label for="quiz_answer">{{ quiz.question }}</label>
+<<<<<<< HEAD
                 <input type="text" class="form-control" id="quiz_answer" name="quiz_answer" required>
                 <input type="hidden" name="quiz_index" value="{{ quiz_index }}">
+=======
+                <div class="input-group">
+                    <input type="text" class="form-control" id="quiz_answer" name="quiz_answer" required>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-dark" id="checkAnswer">확인</button>
+                    </div>
+                </div>
+                <small id="quizHelp" class="form-text"></small>
+                <input type="hidden" name="quiz_index" id="quiz_index" value="{{ quiz_index }}">
+>>>>>>> 660fd0d (second commit)
             </div>
             <div class="btn">
                 <button type="submit" class="btn btn-dark">회원가입</button>
@@ -103,6 +151,13 @@
             // 중복 확인 상태
             let isUsernameChecked = false;
             let isUsernameValid = false;
+<<<<<<< HEAD
+=======
+            let isNicknameChecked = false;
+            let isNicknameValid = false;
+            let isQuizChecked = false;
+            let isQuizValid = false;
+>>>>>>> 660fd0d (second commit)
 
             // 중복 확인 버튼 클릭 이벤트
             $('#checkUsername').click(function () {
@@ -113,6 +168,18 @@
                     return;
                 }
 
+<<<<<<< HEAD
+=======
+                // 영어와 숫자만 허용하는 정규식 검사
+                const alphanumericRegex = /^[A-Za-z0-9]+$/;
+                if (!alphanumericRegex.test(username)) {
+                    $('#usernameHelp').text('아이디는 영어와 숫자만 사용 가능합니다.').css('color', 'red');
+                    isUsernameChecked = true;
+                    isUsernameValid = false;
+                    return;
+                }
+
+>>>>>>> 660fd0d (second commit)
                 // AJAX 요청으로 중복 확인
                 $.ajax({
                     type: 'POST',
@@ -142,24 +209,164 @@
                 $('#usernameHelp').text('중복 확인이 필요합니다.').css('color', 'blue');
             });
 
+<<<<<<< HEAD
             // 폼 제출 시 중복 확인 여부 검사
             $('form').submit(function (e) {
+=======
+            // 비밀번호 길이 확인 (실시간)
+$('#password').on('input', function() {
+    const password = $(this).val();
+    
+    if (password.length === 0) {
+        $('#passwordHelp').text('');
+    } else if (password.length < 6) {
+        $('#passwordHelp').text('비밀번호는 최소 6자 이상이어야 합니다.').css('color', 'red');
+    } else {
+        $('#passwordHelp').text('사용 가능한 비밀번호입니다.').css('color', 'green');
+    }
+});
+
+
+            // 닉네임 중복 확인
+            $('#checkNickname').click(function () {
+                const nickname = $('#nickname').val();
+
+                if (!nickname) {
+                    $('#nicknameHelp').text('닉네임을 입력해주세요.').css('color', 'red');
+                    return;
+                }
+
+                // AJAX 요청으로 중복 확인
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/check-nickname',
+                    data: { 'nickname': nickname },
+                    success: function (response) {
+                        isNicknameChecked = true;
+
+                        if (response.success) {
+                            $('#nicknameHelp').text(response.message).css('color', 'green');
+                            isNicknameValid = true;
+                        } else {
+                            $('#nicknameHelp').text(response.message).css('color', 'red');
+                            isNicknameValid = false;
+                        }
+                    },
+                    error: function () {
+                        $('#nicknameHelp').text('서버 오류가 발생했습니다.').css('color', 'red');
+                    }
+                });
+            });
+
+            // 퀴즈 정답 확인
+            $('#checkAnswer').click(function () {
+                const quizAnswer = $('#quiz_answer').val();
+                const quizIndex = $('#quiz_index').val();
+
+                if (!quizAnswer) {
+                    $('#quizHelp').text('퀴즈 답변을 입력해주세요.').css('color', 'red');
+                    return;
+                }
+
+                // AJAX 요청으로 정답 확인
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/check-quiz-answer',
+                    data: {
+                        'quiz_answer': quizAnswer,
+                        'quiz_index': quizIndex
+                    },
+                    success: function (response) {
+                        isQuizChecked = true;
+
+                        if (response.success) {
+                            $('#quizHelp').text(response.message).css('color', 'green');
+                            isQuizValid = true;
+                        } else {
+                            $('#quizHelp').text(response.message).css('color', 'red');
+                            isQuizValid = false;
+                        }
+                    },
+                    error: function () {
+                        $('#quizHelp').text('서버 오류가 발생했습니다.').css('color', 'red');
+                    }
+                });
+            });
+
+            // 닉네임 입력값 변경 시 중복 확인 초기화
+            $('#nickname').on('input', function () {
+                isNicknameChecked = false;
+                isNicknameValid = false;
+                $('#nicknameHelp').text('중복 확인이 필요합니다.').css('color', 'blue');
+            });
+
+            // 퀴즈 답변 입력값 변경 시 확인 초기화
+            $('#quiz_answer').on('input', function () {
+                isQuizChecked = false;
+                isQuizValid = false;
+                $('#quizHelp').text('정답 확인이 필요합니다.').css('color', 'blue');
+            });
+
+
+            // 폼 제출 시 검사
+            $('form').submit(function (e) {
+                // 아이디 중복 확인 검사
+>>>>>>> 660fd0d (second commit)
                 if (!isUsernameChecked || !isUsernameValid) {
                     e.preventDefault();
                     alert('아이디 중복 확인이 필요합니다.');
                     return false;
                 }
 
+<<<<<<< HEAD
                 // 비밀번호 확인
                 const password = $('#password').val();
                 const passwordConfirm = $('#password_confirm').val();
 
+=======
+                // 비밀번호 길이 검사
+                const password = $('#password').val();
+                if (password.length < 6) {
+                    e.preventDefault();
+                    alert('비밀번호는 최소 6자 이상이어야 합니다.');
+                    return false;
+                }
+
+                // 비밀번호 일치 검사
+                const passwordConfirm = $('#password_confirm').val();
+>>>>>>> 660fd0d (second commit)
                 if (password !== passwordConfirm) {
                     e.preventDefault();
                     alert('비밀번호가 일치하지 않습니다.');
                     return false;
+<<<<<<< HEAD
                 }
             });
         });
     </script>
 </body>
+=======
+
+                    // 닉네임 중복 확인 검사
+                    if (!isNicknameChecked || !isNicknameValid) {
+                        e.preventDefault();
+                        alert('닉네임 중복 확인이 필요합니다.');
+                        return false;
+                    }
+
+                    // 퀴즈 정답 확인 검사
+                    if (!isQuizChecked || !isQuizValid) {
+                        e.preventDefault();
+                        alert('정글 퀴즈 정답 확인이 필요합니다.');
+                        return false;
+                    }
+                }
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>
+>>>>>>> 660fd0d (second commit)
