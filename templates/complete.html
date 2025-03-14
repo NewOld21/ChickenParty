@@ -34,6 +34,21 @@
         .top-button {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+        }
+        .btn-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-right span {
+            margin-right: 5px; 
         }
         .msgt{
             height: 100px;
@@ -59,22 +74,20 @@
 
 <body>
     <div class="wrap">
-        <p class="top-button">
+        <div class="top-button">
             <a href="{{ url_for('apply') }}"><button type="button" class="btn btn-dark">파티 모집</button></a>
-            <a href="{{ url_for('home') }}"><button type="button" class="btn btn-primary">홈</button></a>
-<<<<<<< HEAD
-=======
-            
->>>>>>> 660fd0d (second commit)
+            <a class="btn-center" href="{{ url_for('home') }}"><button type="button" class="btn btn-primary">홈</button></a>
             {% if user %}
                 <!-- 로그인된 경우 -->
-                <span class="mr-2">{{ user.nickname }}님 환영합니다</span>
-                <a href="{{ url_for('logout') }}"><button type="button" class="btn btn-danger">로그아웃</button></a>
+                 <div class="navbar-right">
+                    <span class="mr-2 " >{{ user.nickname }}님 환영합니다</span>
+                    <a  href="{{ url_for('logout') }}"><button type="button" class="btn btn-danger">로그아웃</button></a>
+                 </div>
             {% else %}
                 <!-- 로그인되지 않은 경우 -->
                 <a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary">로그인</button></a>
             {% endif %}
-        </p>
+        </div>
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
                 <h1 class="text-center">참여 확정되었습니다!</h1>
